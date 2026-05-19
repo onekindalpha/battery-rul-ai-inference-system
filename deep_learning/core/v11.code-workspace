@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../../.."
+		}
+	],
+	"settings": {
+		"python-envs.defaultEnvManager": "ms-python.python:venv",
+		"python-envs.defaultPackageManager": "ms-python.python:pip",
+		"terminal.integrated.env.linux": {
+			"PATH": "/home/ubuntu/miniconda/envs/ec2-battery/bin:${env:PATH}"
+		}
+	}
+}

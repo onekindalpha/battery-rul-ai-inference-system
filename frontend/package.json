@@ -1,0 +1,27 @@
+{
+  "name": "battery-rul-ui",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "node -e \"console.log('no tests yet')\""
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "echarts": "^5.5.0",
+    "plotly.js": "^3.5.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-plotly.js": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/plotly.js": "^3.0.10",
+    "@types/react": "^18.2.56",
+    "@types/react-dom": "^18.2.19",
+    "typescript": "^5.4.2",
+    "vite": "^5.1.4"
+  }
+}

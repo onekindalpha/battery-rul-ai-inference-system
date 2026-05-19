@@ -1,0 +1,64 @@
+.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+*.log
+
+.env
+.env.*
+!.env.example
+
+node_modules/
+frontend/node_modules/
+frontend/.vite/
+frontend/dist/
+frontend/tsconfig.tsbuildinfo
+
+venv/
+.venv/
+
+data/live_reinfer_results/
+data/_bad_generated_batches*/
+data/precomputed_backup_*/
+
+*.zip
+*.tar.gz
+
+# keep only selected public checkpoint intentionally
+core_checkpoints/*
+!core_checkpoints/nasa_bmaml_best_re.pt
+
+# raw data not needed for deployment
+*.mat
+*.sqlite
+*.db
+
+# local backup files
+*.bak
+*.bak.*
+*.before_restore*
+*.bak_before_*
+
+# large research/test datasets copied from development workspace
+deep_learning/testset/
+deep_learning/experiments/
+deep_learning/core/real_time/*.csv
+
+# development-only research artifacts
+deep_learning/testset/
+deep_learning/experiments/
+deep_learning/model/
+deep_learning/core/assets/
+deep_learning/core/real_time/*.csv
+
+# more development-only artifacts
+deep_learning/wandb/
+deep_learning/core/real_time/*.csv
+deep_learning/model/
+deep_learning/core/assets/
+
+# local patch/backup artifacts
+frontend/src/ui/*.bak*
+frontend/src/ui/*.broken*
+frontend/src/ui/*.backup
+backend/app/*.bak*
