@@ -2040,7 +2040,7 @@ export default function App() {
                         ✅ {inferResult.battery} r={inferResult.r_ratio?.toFixed(2)} — Live reinference complete
                       </div>
                       <div className="text-xs opacity-80">
-                        Latest server-session result is now displayed.
+                        Live reinference result is displayed for this session. Refresh the page to return to the precomputed baseline.
                       </div>
                     </div>
                   )}
