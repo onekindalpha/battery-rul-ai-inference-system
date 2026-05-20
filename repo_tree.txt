@@ -1,0 +1,275 @@
+./.dockerignore
+./.gitattributes
+./.gitignore
+./backend/app/__init__.py
+./backend/app/data_access.py
+./backend/app/diagnostics.py
+./backend/app/main.py
+./backend/app/settings.py
+./backend/Dockerfile
+./backend/pyproject.toml
+./backend/tests/test_health.py
+./core_checkpoints/nasa_bmaml_best_re.pt
+./data/battery_meta_c_ref.json
+./data/feature_rul_stats.csv
+./data/feature_rul_stats.json
+./data/nasa_features_rul.csv
+./data/precomputed_from_export_v2/B0018_viz_meta_default.json
+./data/precomputed_from_export_v2/B0018_viz_meta_r0p00.json
+./data/precomputed_from_export_v2/B0018_viz_meta_r0p05.json
+./data/precomputed_from_export_v2/B0018_viz_meta_r0p10.json
+./data/precomputed_from_export_v2/B0018_viz_meta_r0p15.json
+./data/precomputed_from_export_v2/B0018_viz_meta_r0p20.json
+./data/precomputed_from_export_v2/B0018_viz_meta_r0p25.json
+./data/precomputed_from_export_v2/B0018_viz_meta_r0p30.json
+./data/precomputed_from_export_v2/B0018_viz_meta_r0p35.json
+./data/precomputed_from_export_v2/B0018_viz_meta_r0p40.json
+./data/precomputed_from_export_v2/B0042_viz_meta_default.json
+./data/precomputed_from_export_v2/B0042_viz_meta_r0p00.json
+./data/precomputed_from_export_v2/B0042_viz_meta_r0p05.json
+./data/precomputed_from_export_v2/B0042_viz_meta_r0p10.json
+./data/precomputed_from_export_v2/B0042_viz_meta_r0p15.json
+./data/precomputed_from_export_v2/B0042_viz_meta_r0p20.json
+./data/precomputed_from_export_v2/B0042_viz_meta_r0p25.json
+./data/precomputed_from_export_v2/B0042_viz_meta_r0p30.json
+./data/precomputed_from_export_v2/B0042_viz_meta_r0p35.json
+./data/precomputed_from_export_v2/B0042_viz_meta_r0p40.json
+./data/precomputed_from_export_v2/B0043_viz_meta_default.json
+./data/precomputed_from_export_v2/B0043_viz_meta_r0p00.json
+./data/precomputed_from_export_v2/B0043_viz_meta_r0p05.json
+./data/precomputed_from_export_v2/B0043_viz_meta_r0p10.json
+./data/precomputed_from_export_v2/B0043_viz_meta_r0p15.json
+./data/precomputed_from_export_v2/B0043_viz_meta_r0p20.json
+./data/precomputed_from_export_v2/B0043_viz_meta_r0p25.json
+./data/precomputed_from_export_v2/B0043_viz_meta_r0p30.json
+./data/precomputed_from_export_v2/B0043_viz_meta_r0p35.json
+./data/precomputed_from_export_v2/B0043_viz_meta_r0p40.json
+./data/precomputed/B0018_viz_meta_default.json
+./data/precomputed/B0018_viz_meta_r0p00.json
+./data/precomputed/B0018_viz_meta_r0p05.json
+./data/precomputed/B0018_viz_meta_r0p10.json
+./data/precomputed/B0018_viz_meta_r0p15.json
+./data/precomputed/B0018_viz_meta_r0p20.json
+./data/precomputed/B0018_viz_meta_r0p25.json
+./data/precomputed/B0018_viz_meta_r0p30.json
+./data/precomputed/B0018_viz_meta_r0p35.json
+./data/precomputed/B0018_viz_meta_r0p40.json
+./data/precomputed/B0042_viz_meta_default.json
+./data/precomputed/B0042_viz_meta_r0p00.json
+./data/precomputed/B0042_viz_meta_r0p05.json
+./data/precomputed/B0042_viz_meta_r0p10.json
+./data/precomputed/B0042_viz_meta_r0p15.json
+./data/precomputed/B0042_viz_meta_r0p20.json
+./data/precomputed/B0042_viz_meta_r0p25.json
+./data/precomputed/B0042_viz_meta_r0p30.json
+./data/precomputed/B0042_viz_meta_r0p35.json
+./data/precomputed/B0042_viz_meta_r0p40.json
+./data/precomputed/B0043_viz_meta_default.json
+./data/precomputed/B0043_viz_meta_r0p00.json
+./data/precomputed/B0043_viz_meta_r0p05.json
+./data/precomputed/B0043_viz_meta_r0p10.json
+./data/precomputed/B0043_viz_meta_r0p15.json
+./data/precomputed/B0043_viz_meta_r0p20.json
+./data/precomputed/B0043_viz_meta_r0p25.json
+./data/precomputed/B0043_viz_meta_r0p30.json
+./data/precomputed/B0043_viz_meta_r0p35.json
+./data/precomputed/B0043_viz_meta_r0p40.json
+./deep_learning/core_2 (nasa+cacle tiral)/__init__.py
+./deep_learning/core_2 (nasa+cacle tiral)/config_2.py
+./deep_learning/core_2 (nasa+cacle tiral)/data_2.py
+./deep_learning/core_2 (nasa+cacle tiral)/data_seq_group_2.py
+./deep_learning/core_2 (nasa+cacle tiral)/export_rul_dashboard_data_meta_fixed_2.py
+./deep_learning/core_2 (nasa+cacle tiral)/feature_importance_2.py
+./deep_learning/core_2 (nasa+cacle tiral)/feature_shap_bmaml_2.py
+./deep_learning/core_2 (nasa+cacle tiral)/meta_db_loader_2.py
+./deep_learning/core_2 (nasa+cacle tiral)/meta_utils_2.py
+./deep_learning/core_2 (nasa+cacle tiral)/models_2.py
+./deep_learning/core_2 (nasa+cacle tiral)/prefix_inference_viz_2_restored_v3_pyc.py
+./deep_learning/core_2 (nasa+cacle tiral)/prefix_inference_viz_2.opcode_report.txt
+./deep_learning/core_2 (nasa+cacle tiral)/scalers_2.py
+./deep_learning/core_2 (nasa+cacle tiral)/train_backbone_2.py
+./deep_learning/core_2 (nasa+cacle tiral)/train_meta_2.py
+./deep_learning/core/.py
+./deep_learning/core/2_EV6_real_data_fixed_import (1).py
+./deep_learning/core/analysis/battery_meta_c_ref.json
+./deep_learning/core/analysis/feature_rul_stats.csv
+./deep_learning/core/analysis/feature_rul_stats.json
+./deep_learning/core/analysis/nasa_features_rul.csv
+./deep_learning/core/app_overview_only_v1.py
+./deep_learning/core/app_overview_only_v2.py
+./deep_learning/core/app_rul_dashboard_apm_clean_v2_plus_v17_features_subset.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v3_notorch.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_en_v2.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_NAV_radio_fix_freeze.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_no_obsrul_unlock_env.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_OVERVIEW_v12_freeze_fix_autoplay_checkbox (2).py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_OVERVIEW_v14_autoplay_fallback.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_OVERVIEW_v14_autoplay_fixed (1).py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_OVERVIEW_v14_autoplay_fixed.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_OVERVIEW_v17_fix_freeze_values_autoplay_PATCHED_v3.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_OVERVIEW_v17_fix_freeze_values_autoplay_PATCHED_v4.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_OVERVIEW_v17_fix_freeze_values_autoplay_PATCHED.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_OVERVIEW_v17_fix_freeze_values_autoplay.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_OVERVIEW_v18_pruned_features_autoplayfix_PATCHED_v2 (1).py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_OVERVIEW_v18_pruned_features_autoplayfix_PATCHED_v2.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_OVERVIEW_v18_pruned_features_autoplayfix_PATCHED.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_OVERVIEW_v18_pruned_features_autoplayfix.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_OVERVIEW_v18_pruned_overview (1).py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_ref_from_working_cleanv2_stable_page_radio.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_BOARD_clean_v2_add_cratepeak_LAYOUT_v3_1.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_BOARD_clean_v2_add_cratepeak_LAYOUT_v3_12.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_BOARD_clean_v2_add_cratepeak_LAYOUT_v3_13_fix.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_BOARD_clean_v2_add_cratepeak_LAYOUT_v3_14_fix_df_scen.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_BOARD_clean_v2_add_cratepeak_LAYOUT_v3_15_apm_smoother.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_BOARD_clean_v2_add_cratepeak_LAYOUT_v3_2.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_BOARD_clean_v2_add_cratepeak_LAYOUT_v3_3.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_BOARD_clean_v2_add_cratepeak_LAYOUT_v3_6.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_BOARD_clean_v2_add_cratepeak_LAYOUT_v3_7.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_BOARD_clean_v2_add_cratepeak.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_BOARD_clean_v2_PATCHED_autoplay_stable.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_BOARD_clean_v2_patched.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_BOARD_clean_v2.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_FIX_NA_and_quick_anomaly.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_FIXED_FULLWIDTH_BOARD_v2.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_FIXED_FULLWIDTH_BOARD_v3.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_FIXED_FULLWIDTH_BOARD_v4_autoplay_smooth.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_FIXED_FULLWIDTH_BOARD.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_UPDATED_r_ratio_fixed_temp3_load6.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_UPDATED_r_ratio_fixed_temp3.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_UPDATED_r_ratio_fixed_wrapped.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_UPDATED.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_v10_pageconfig_first (2).py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_v10_pageconfig_first.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_v7_no_flicker_fix3.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_v8_fix_freeze_board.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_OVERVIEW_v9_fix_recursion_no_freeze.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_RESTORE_autoplay_reinfer_pageconfig_first.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif_STABLE_minchange_fixed2 (1).py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4_tabs_monitoring_whatif.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v4.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v5_en_alerts.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v5.py
+./deep_learning/core/app_rul_dashboard_apm_fixed_v6_ui_fix.py
+./deep_learning/core/app_rul_dashboard_apm_fixed.py
+./deep_learning/core/app_rul_dashboard_patched_final (1).py
+./deep_learning/core/app_rul_dashboard_patched_final_monitoring.py
+./deep_learning/core/app_rul_with_ev6.py
+./deep_learning/core/bmaml_runtime.py
+./deep_learning/core/check_2_restored_from_dis.py
+./deep_learning/core/check_restored_from_dis.py
+./deep_learning/core/config.py
+./deep_learning/core/data_seq_group.py
+./deep_learning/core/data.py
+./deep_learning/core/ev6_senario_rul_restored_from_dis_v2.py
+./deep_learning/core/export_nasa_feature_rul_stats.py
+./deep_learning/core/export_rul_dashboard_data_meta_fixed.py
+./deep_learning/core/feature_importance.py
+./deep_learning/core/feature_shap_bmaml.py
+./deep_learning/core/make_true_crate_enriched_csv.py
+./deep_learning/core/meta_db_loader.py
+./deep_learning/core/meta_utils.py
+./deep_learning/core/models.py
+./deep_learning/core/prefix_inference_viz_backbone_restored_v3_pyc.py
+./deep_learning/core/prefix_inference_viz_meta_restored_v3_pyc_patched_json_v2.py
+./deep_learning/core/prefix_inference_viz_meta_restored_v3_pyc_patched_json_v3.py
+./deep_learning/core/prefix_inference_viz_meta_restored_v3_pyc_patched_json.py
+./deep_learning/core/prefix_inference_viz_meta_restored_v3_pyc_patched.py
+./deep_learning/core/prefix_inference_viz_meta_restored_v3_pyc.py
+./deep_learning/core/prefix_inference_viz_restored_v4_pyc.py
+./deep_learning/core/previous/2_EV6_real_data_pathfix (1).py
+./deep_learning/core/previous/app_rul_dashboard_fixed_full (1).py
+./deep_learning/core/previous/app_rul_dashboard_pathfix (1).py
+./deep_learning/core/previous/app_rul_dashboard.py
+./deep_learning/core/real_time/real_time.py
+./deep_learning/core/rul_inference_manager_restored_from_dis_v2.py
+./deep_learning/core/rul_precomputed_loader_restored.py
+./deep_learning/core/scalers.py
+./deep_learning/core/shap_outputs/bmaml_shap_seq_feature_importance.json
+./deep_learning/core/shap_outputs/bmaml_shap_seq_feature_importance.png
+./deep_learning/core/test_meta_only_restored_from_dis_v2.py
+./deep_learning/core/train_backbone.py
+./deep_learning/core/train_meta.py
+./deep_learning/core/Untitled
+./deep_learning/core/v11.code-workspace
+./deep_learning/core/복원 스크립트 분석/check_2_restored.opcode_report_v3.txt
+./deep_learning/core/복원 스크립트 분석/check_restored_from_dis.opcode_report_v3.txt
+./deep_learning/core/복원 스크립트 분석/ev6_senario_rul_restored_from_dis.opcode_report_v3.txt
+./deep_learning/core/복원 스크립트 분석/prefix_inference_viz_backbone.opcode_report.txt
+./deep_learning/core/복원 스크립트 분석/prefix_inference_viz_meta.opcode_report_v2.txt
+./deep_learning/core/복원 스크립트 분석/prefix_inference_viz_meta.opcode_report.txt
+./deep_learning/core/복원 스크립트 분석/prefix_inference_viz.opcode_report_v2.txt
+./deep_learning/core/복원 스크립트 분석/rul_inference_manager_restored_from_dis.opcode_report_v3.txt
+./deep_learning/core/복원 스크립트 분석/rul_precomputed_loader_restored.opcode_report_v2.txt
+./deep_learning/core/복원 스크립트 분석/rul_precomputed_loader_restored.opcode_report_v3.txt
+./deep_learning/core/복원 스크립트 분석/test_meta_only_restored_from_dis.opcode_report_v3.txt
+./deep_learning/db/__init__.py
+./deep_learning/db/battery_training_data_cleaned_final_basic.csv
+./deep_learning/db/battery_training_data_cleaned_final_causal_with_true_crate_v2_expcond_temp0.csv
+./deep_learning/db/battery_training_data_cleaned_final_causal_with_true_crate.csv
+./deep_learning/db/battery_training_data_cleaned_final_causal.csv
+./deep_learning/db/battery_training_data_cleaned_final.csv
+./deep_learning/db/battery_training_data_cleaned_smooth_filtered.csv
+./deep_learning/db/cacle_battery_training_data_cleaned_final_basic.csv
+./deep_learning/db/cacle_battery_training_data_cleaned_final_causal.csv
+./deep_learning/db/cacle_ceemdan_all_batteries_advanced_causal.csv
+./deep_learning/db/ceemdan_all_batteries_advanced_causal.csv
+./deep_learning/db/ceemdan_all_batteries_advanced.csv
+./deep_learning/db/ceemdan_components.csv
+./deep_learning/db/preprocessing/__init__.py
+./deep_learning/db/preprocessing/(preprocessing)db_qc.py
+./deep_learning/db/preprocessing/(preprocessing)pipeline_1.py
+./deep_learning/db/preprocessing/(preprocessing)pipeline_2.py
+./deep_learning/db/preprocessing/(preprocessing)pipeline_mat.py
+./deep_learning/db/preprocessing/(preprocessing)pipeline_xlsx_copy.py
+./deep_learning/db/preprocessing/(preprocessing)pipeline_xlsx.py
+./deep_learning/db/preprocessing/(preprocessing)tabular_baseline_rul_cacle.py
+./deep_learning/db/preprocessing/(preprocessing)tabular_baseline_rul_nasa.py
+./deep_learning/db/preprocessing/cacle_casual_sanity_check.py
+./deep_learning/db/preprocessing/capacity_smooth.py
+./deep_learning/db/preprocessing/ev6_scenario_rul.py
+./deep_learning/db/preprocessing/feature_importance_basic.py
+./deep_learning/db/preprocessing/feature_importance_casual_cacle.py
+./deep_learning/db/preprocessing/feature_importance_casual.py
+./deep_learning/db/preprocessing/pipeline_3.py
+./deep_learning/db/preprocessing/pipeline_4.py
+./deep_learning/db/preprocessing/pre_1.py
+./deep_learning/db/preprocessing/pre_10.py
+./deep_learning/db/preprocessing/pre_11.py
+./deep_learning/db/preprocessing/pre_2.py
+./deep_learning/db/preprocessing/pre_3.py
+./deep_learning/db/preprocessing/pre_4.py
+./deep_learning/db/preprocessing/pre_5.py
+./deep_learning/db/preprocessing/pre_6.py
+./deep_learning/db/preprocessing/pre_7.py
+./deep_learning/db/preprocessing/pre_8.py
+./deep_learning/db/preprocessing/pre_9.py
+./deep_learning/db/preprocessing/tabular_baseline_rul.py
+./Dockerfile
+./export_rul_dashboard_data_meta_fixed.py
+./frontend/Dockerfile
+./frontend/index.html
+./frontend/package-lock.json
+./frontend/package.json
+./frontend/src/components/RulPlotlyViewer.tsx
+./frontend/src/main.tsx
+./frontend/src/types/react-plotly.d.ts
+./frontend/src/ui/App.tsx
+./frontend/src/ui/ExplainabilityAnomalyV29.tsx
+./frontend/src/ui/ExplainabilityAnomalyV30.tsx
+./frontend/src/ui/ExplainabilityCleanV23.tsx
+./frontend/src/ui/ExplainabilityCleanV24.tsx
+./frontend/src/ui/ExplainabilitySlimV28.tsx
+./frontend/src/ui/Fixed4CompareExplainabilityV19.tsx
+./frontend/src/ui/Fixed4CompareExplainabilityV20.tsx
+./frontend/src/ui/RulPlotlyViewer.tsx
+./frontend/tsconfig.json
+./frontend/vite.config.ts
+./hf_app.py
+./hf_front_app.py
+./README.md
+./repo_tree.txt
+./requirements-hf-reinfer.txt
+./run_bmaml_reinfer.py
+./scripts/export_rul_dashboard_data_meta_fixed.py
+./scripts/prefix_inference_viz_meta_restored_v3_pyc_patched_json_v3.py
+./scripts/run_bmaml_reinfer.py
