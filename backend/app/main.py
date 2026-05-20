@@ -2966,15 +2966,11 @@ async def _hf_final_live_reinfer_override(request, call_next):
         except Exception:
             pass
 
+    # Keep live reinference real, but do not cycle through multiple legacy runners.
+    # The previous candidate list could launch slow/stale scripts one after another
+    # after the client had already timed out, leaving runaway subprocesses.
     script_candidates = [
-        repo / "run_bmaml_reinfer.py",
-        repo / "export_rul_dashboard_data_meta_fixed.py",
-        repo / "scripts" / "run_bmaml_reinfer.py",
-        repo / "scripts" / "export_rul_dashboard_data_meta_fixed.py",
         repo / "scripts" / "prefix_inference_viz_meta_restored_v3_pyc_patched_json_v3.py",
-        _Path("/Users/velocitygoal/battery-rul-dashboard/run_bmaml_reinfer.py"),
-        _Path("/Users/velocitygoal/battery-rul-dashboard/export_rul_dashboard_data_meta_fixed.py"),
-        _Path("/Users/velocitygoal/battery-rul-dashboard/scripts/prefix_inference_viz_meta_restored_v3_pyc_patched_json_v3.py"),
     ]
 
     scripts = [x for x in script_candidates if x.exists()]
@@ -3072,7 +3068,27 @@ async def _hf_final_live_reinfer_override(request, call_next):
                     attempts.append(attempt)
 
                     if proc.returncode == 0:
-                        latest_path, latest_payload = _latest_json(out_dirs)
+                        # Prefer the exact single-battery live output over "latest JSON".
+                        # Otherwise batch_viz_meta_*.json or another battery file can be picked,
+                        # which makes the frontend show "complete" but no plot data.
+                        try:
+                            _tag = "r" + f"{float(rr):.2f}".replace(".", "p")
+                        except Exception:
+                            _tag = "r" + str(rr).replace(".", "p")
+
+                        latest_path, latest_payload = None, None
+                        for _d in out_dirs:
+                            _candidate = _d / f"{battery}_viz_meta_{_tag}.json"
+                            if _candidate.exists():
+                                try:
+                                    latest_path = str(_candidate)
+                                    latest_payload = _json.loads(_candidate.read_text())
+                                    break
+                                except Exception:
+                                    latest_path, latest_payload = str(_candidate), None
+
+                        if latest_payload is None:
+                            latest_path, latest_payload = _latest_json(out_dirs)
 
                         base = {
                             "ok": True,
@@ -3094,11 +3110,25 @@ async def _hf_final_live_reinfer_override(request, call_next):
 
                         if isinstance(latest_payload, dict):
                             merged = dict(latest_payload)
+
+                            # Frontend live reinference expects response.item.
+                            # Keep the runner output intact, but wrap it as item
+                            # when the runner itself did not already provide one.
+                            item = latest_payload.get("item")
+                            if not isinstance(item, dict):
+                                item = latest_payload
+
                             merged.update(base)
+                            merged["item"] = item
                             merged["data"] = latest_payload
                             return _JSONResponse(merged, status_code=200)
 
-                        return _JSONResponse(base, status_code=200)
+                        return _JSONResponse({
+                            **base,
+                            "ok": False,
+                            "error": "runner succeeded but no JSON payload was found",
+                            "attempts": attempts[-12:],
+                        }, status_code=500)
 
                 except Exception as e:
                     attempts.append({

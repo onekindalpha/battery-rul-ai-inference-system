@@ -699,7 +699,10 @@ export default function App() {
     setBatch(null)
     setPack(null)
 
-    const url = `${PRECOMP_BASE}/baseline-precomputed-batch/${tag}?baseline=${Date.now()}`
+    const apiTag = String(tag).startsWith('r')
+      ? String(tag)
+      : `r${String(tag).replace('.', 'p')}`
+    const url = `${PRECOMP_BASE}/api/precomputed/${apiTag}?baseline=${Date.now()}`
     console.log(`📦 Loading precomputed batch from: ${url}`)
     fetch(url)
       .then(async (r) => {
@@ -933,7 +936,7 @@ export default function App() {
     if (!battery) return
 
     try {
-      const baselineUrl = `${PRECOMP_BASE}/baseline-precomputed/${battery}_viz_meta_${tag}.json?baseline=${Date.now()}`
+      const baselineUrl = `${PRECOMP_BASE}/api/battery/${battery}/precomputed?r_ratio=${encodeURIComponent(String(rRatio))}&baseline=${Date.now()}`
       const response = await fetch(baselineUrl, { cache: 'no-store' })
       const contentType = response.headers.get('content-type') || ''
 
@@ -2039,23 +2042,6 @@ export default function App() {
                       <div className="text-xs opacity-80">
                         Latest server-session result is now displayed.
                       </div>
-                      <button
-                        type="button"
-                        onClick={handleShowPrecomputedBaseline}
-                        style={{
-                          marginTop: 6,
-                          padding: '6px 10px',
-                          backgroundColor: '#ffffff',
-                          color: '#2e7d32',
-                          border: '1px solid #66bb6a',
-                          borderRadius: 4,
-                          cursor: 'pointer',
-                          fontSize: 11,
-                          fontWeight: 600
-                        }}
-                      >
-                        Show precomputed baseline result
-                      </button>
                     </div>
                   )}
             </div>
