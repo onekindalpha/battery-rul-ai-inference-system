@@ -1,5 +1,8 @@
 # Battery RUL AI Inference System
 
+Language: English | [한국어](README.ko.md)
+
+
 Deep learning-based full-stack AI inference system for battery remaining useful life (RUL) prediction, live reinference, degradation monitoring, and explainability.
 
 **Goal**: Build an end-to-end AI inference system that predicts battery RUL from early-cycle observations and visualizes degradation signals through a web dashboard.
