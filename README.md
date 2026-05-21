@@ -1,6 +1,6 @@
 # Battery RUL AI Inference System
 
-Deep learning-based full-stack AI inference system for battery remaining useful life (RUL) prediction, live reinference, and degradation monitoring.
+Deep learning-based full-stack AI inference system for battery remaining useful life (RUL) prediction, live reinference, degradation monitoring, and explainability.
 
 **Goal**: Build an end-to-end AI inference system that predicts battery RUL from early-cycle observations and visualizes degradation signals through a web dashboard.
 
@@ -16,19 +16,19 @@ The demo shows cycle-level RUL inference, degradation monitoring, battery compar
 - Built an end-to-end deep learning inference system for NASA battery RUL prediction and degradation monitoring.
 - Designed domain-informed time-series features and few-shot support/query tasks from battery cycle data.
 - Implemented BMAML-SVGD-style uncertainty-aware meta-learning with a CEEMDAN-Transformer-DNN backbone.
-- Built and deployed a FastAPI + React dashboard with live reinference, uncertainty visualization, degradation monitoring, SHAP-based explainability, precomputed baseline restoration, and frontend CSV download for the currently displayed prediction result.
-- Used DuckDB-backed local feature data access with CSV/Parquet support and local JSON prediction payloads to support dashboard data loading and precomputed inference results.
+- Built and deployed a FastAPI + React dashboard with live reinference, uncertainty visualization, degradation monitoring, SHAP-based explainability, precomputed baseline restoration, and frontend CSV download.
+- Used DuckDB-backed local feature data access with CSV/Parquet support and local JSON prediction payloads for dashboard loading and precomputed inference results.
 
 ---
 
 ## Project Overview
 
-This project is an end-to-end applied deep learning system that connects battery domain knowledge, sequence modeling, inference APIs, and a deployable web dashboard.
+This project connects battery domain features, sequence modeling, inference APIs, and a deployable web dashboard.
 
 - **Problem**: Predict battery remaining useful life from early-cycle observations and monitor degradation behavior.
 - **Data Pipeline**: NASA battery cycle data → domain-informed feature engineering → few-shot support/query task construction.
 - **Modeling**: BMAML-SVGD-style few-shot Bayesian meta-learning with a CEEMDAN-Transformer-DNN backbone.
-- **Inference System**: PyTorch model inference with precomputed cache and on-demand live reinference.
+- **Inference System**: PyTorch model inference with precomputed cache and optional live reinference.
 - **Application**: FastAPI backend + React/Vite dashboard deployed with Docker on Hugging Face Spaces.
 
 ---
@@ -47,13 +47,13 @@ I implemented the core pipeline from data preprocessing to model inference, dash
 
 ## Key Features
 
-### 1. RUL Prediction Dashboard
+### RUL Prediction Dashboard
 
 - Visualizes predicted RUL trajectory from the support period to the query period.
 - Displays prediction curves, ground-truth references, and model uncertainty bands.
 - Calculates RMSE, MAE, and confidence-related metrics for selected batteries and observation ratios.
 
-### 2. Live Reinference
+### Live Reinference
 
 - Provides an `Initialize & Reinference` flow for on-demand model inference.
 - Runs CPU-based reinference in the deployed Hugging Face Spaces environment.
@@ -61,19 +61,19 @@ I implemented the core pipeline from data preprocessing to model inference, dash
 - Allows users to restore the precomputed baseline result after live reinference.
 - Allows users to download the currently displayed prediction curve as a CSV file.
 
-### 3. Degradation Monitoring
+### Degradation Monitoring
 
 - Monitors degradation-related signals such as capacity, DCR, impedance, temperature, current stress, and LLI proxy signals.
 - Uses cycle-level evidence to identify abnormal degradation behavior.
 - Provides a degradation-focused view beyond a single RUL prediction number.
 
-### 4. Explainability & Uncertainty
+### Explainability & Uncertainty
 
 - Estimates prediction uncertainty using multiple SVGD-style prediction particles.
 - Visualizes global feature importance through SHAP-based analysis.
 - Connects model output with degradation-related feature behavior.
 
-### 5. Deployment-Oriented Inference Flow
+### Deployment-Oriented Inference Flow
 
 - Uses precomputed prediction cache for fast initial loading.
 - Supports live reinference when deeper analysis is needed.
@@ -83,50 +83,11 @@ I implemented the core pipeline from data preprocessing to model inference, dash
 
 ## System Architecture
 
-```text
-Raw NASA Battery Data
-    ↓
-[Data Engineering]
-    - CSV / cycle-level data processing
-    - Domain-informed feature engineering
-    - 40 time-series features
-    - Robust scaling and support/query task construction
-    ↓
-[Model Training]
-    - BMAML-SVGD-style few-shot meta-learning
-    - CEEMDAN-Transformer-DNN backbone
-    - Ray Tune + ASHA hyperparameter tuning
-    - Checkpoint: nasa_bmaml_best_re.pt
-    ↓
-[Precomputed Cache]
-    - Cached predictions for multiple r_ratio settings
-    - JSON payloads for fast dashboard loading
-    - Fallback path when live inference is unavailable
-    ↓
-[Live Inference Engine]
-    - POST /api/battery/{id}/reinfer?r_ratio=X
-    - CPU-based on-demand inference
-    - Output: prediction, uncertainty, confidence, and metrics
-    ↓
-[FastAPI Backend]
-    - Inference APIs
-    - DuckDB-backed local feature data access with CSV/Parquet support
-    - Local JSON prediction payload loading
-    - Degradation monitoring
-    - Precomputed/live inference result handling
-    ↓
-[React Frontend]
-    - Overview tab
-    - Degradation tab
-    - Compare tab
-    - Explainability view
-    - Live reinference controls
-    ↓
-[Docker / Hugging Face Spaces Deployment]
-    - Full-stack app serving
-    - Git LFS checkpoint handling
-    - Deployment-aware file path configuration
-```
+![System architecture diagram](docs/assets/system_architecture_v6.svg)
+
+The deployed dashboard has two inference paths. The fast path loads precomputed JSON payloads for the selected battery and observation ratio. The optional live path runs the PyTorch reinference wrapper and updates the dashboard with live prediction and uncertainty values.
+
+The same FastAPI backend serves degradation monitoring, SHAP feature importance, CSV export, and DuckDB-backed feature access. The React frontend renders the prediction, monitoring, comparison, explainability, playback, baseline restore, and export flows.
 
 ---
 
@@ -136,27 +97,15 @@ Raw NASA Battery Data
 
 In real battery operation, long-term degradation data may not be available at the beginning of a battery's life. This project frames early-cycle RUL estimation as a few-shot prediction problem.
 
-```text
-Support Set: early observed cycles
-Query Set: future cycles to predict
-Task: adapt to each battery using limited early-cycle information
-```
+- **Support set**: early observed cycles
+- **Query set**: future cycles to predict
+- **Task**: adapt to each battery using limited early-cycle information
 
 ### BMAML-SVGD-Style Meta-Learning
 
-The model is inspired by Bayesian MAML and SVGD-based uncertainty estimation.
+![Model flow diagram](docs/assets/model_flow_v6.svg)
 
-```text
-Input: sequence features + summary features
-    ↓
-CEEMDAN-based signal decomposition features
-    ↓
-Transformer encoder for temporal dependency modeling
-    ↓
-DNN prediction head for RUL estimation
-    ↓
-SVGD-style particles for uncertainty-aware predictions
-```
+The model is inspired by Bayesian MAML and SVGD-based uncertainty estimation. It uses sequence features and summary features, CEEMDAN-based decomposition features, a Transformer encoder, a DNN prediction head, and SVGD-style particles for uncertainty-aware RUL prediction.
 
 ### Why This Approach
 
@@ -169,33 +118,11 @@ SVGD-style particles for uncertainty-aware predictions
 
 ## Data Pipeline
 
-### Feature Engineering
+![Data pipeline diagram](docs/assets/data_pipeline_v6.svg)
 
-Raw battery measurements are transformed into degradation-related time-series features.
+Raw battery measurements are transformed into degradation-related time-series features. These features include capacity degradation velocity, DCR/impedance growth rate, temperature stress indicators, current/load stress metrics, CEEMDAN-based IMF decomposition features, and LLI/LAM proxy signals.
 
-```text
-Raw Battery Data
-    - Voltage
-    - Current
-    - Temperature
-    - Capacity
-    - Impedance
-    ↓
-Time-Series Features
-    - Capacity degradation velocity
-    - DCR / impedance growth rate
-    - Temperature stress indicators
-    - Current / load stress metrics
-    - CEEMDAN-based IMF decomposition features
-    - LLI / LAM proxy signals
-    ↓
-Few-Shot Task Construction
-    - Support set
-    - Query set
-    - Task-level sampling
-```
-
-### Main Data Components
+Main data components:
 
 - **Feature count**: 40 time-series features
 - **Scaling**: custom robust 3D scaling for sequence data
@@ -216,53 +143,49 @@ Few-Shot Task Construction
 
 ### Experimental Setting
 
-```text
-Support Set: 16 cycles
-Query Set: 16 cycles
-Meta-Train Batteries: 14 batteries
-Meta-Val Batteries: 2 batteries
-Meta-Test Batteries: 6 batteries
-Evaluation Ratio: r_ratio = 0.20
-```
+- **Support Set**: 16 cycles
+- **Query Set**: 16 cycles
+- **Meta-Train Batteries**: 14 batteries
+- **Meta-Val Batteries**: 2 batteries
+- **Meta-Test Batteries**: 6 batteries
+- **Evaluation Ratio**: r_ratio = 0.20
 
 ### Training Results
 
-| Metric | Value | Description |
-|---|---:|---|
-| RMSE | 7.46 cycles | Query set prediction error at r_ratio = 0.20 |
-| MAE | 6.82 cycles | Mean absolute error at r_ratio = 0.20 |
+- **RMSE**: 7.46 cycles at r_ratio = 0.20
+- **MAE**: 6.82 cycles at r_ratio = 0.20
 
-> Note: These results validate the implemented inference pipeline under a fixed experimental setting. They are not presented as a state-of-the-art benchmark claim.
+> These results validate the implemented inference pipeline under a fixed experimental setting. They are not presented as a state-of-the-art benchmark claim.
 
 ---
 
 ## Engineering Challenges Solved
 
-### 1. Local vs Docker Path Mismatch
+### Local vs Docker Path Mismatch
 
 **Problem**: Model checkpoints and data files worked locally but failed inside Docker/Hugging Face Spaces due to different runtime paths.
 
 **Solution**: Added deployment-aware path handling through backend settings and runtime entrypoints.
 
-### 2. CPU-Based Live Reinference Runtime
+### CPU-Based Live Reinference Runtime
 
 **Problem**: Live reinference takes around 40 seconds in a CPU-only Hugging Face Spaces environment.
 
 **Solution**: Combined precomputed JSON cache for fast initial loading with on-demand live reinference for detailed analysis.
 
-### 3. Frontend-Backend State Synchronization
+### Frontend-Backend State Synchronization
 
 **Problem**: Reinference results needed to update prediction curves, uncertainty bands, confidence values, metrics, baseline restoration, and dashboard state consistently.
 
 **Solution**: Designed API response payloads and React state flow to synchronize prediction, standard deviation, confidence, and metrics.
 
-### 4. Backend 500 Errors and Deployment Stability
+### Backend 500 Errors and Deployment Stability
 
 **Problem**: Missing files, path mismatches, or unavailable precomputed data could break the dashboard flow.
 
 **Solution**: Added fallback behavior, diagnostics, and deployment-aware file handling to improve runtime stability.
 
-### 5. Model Output to User-Facing Dashboard
+### Model Output to User-Facing Dashboard
 
 **Problem**: Raw model outputs are difficult to interpret directly.
 
@@ -272,18 +195,19 @@ Evaluation Ratio: r_ratio = 0.20
 
 ## Backend API
 
-The backend is implemented with FastAPI and provides inference, degradation monitoring, and explainability-related endpoints.
+![Backend API flow diagram](docs/assets/backend_api_flow_v6.svg)
 
-### Main Endpoints
+The backend is implemented with FastAPI and provides inference, degradation monitoring, explainability, and export endpoints.
 
-```text
-GET  /api/battery/{id}/precomputed
-POST /api/battery/{id}/reinfer?r_ratio=X
-GET  /api/battery/{id}/degradation-monitoring
-GET  /api/fixed4/shap-current
-```
+Main endpoint groups:
 
-### Backend Responsibilities
+- precomputed prediction loading
+- live reinference
+- degradation monitoring
+- SHAP-based feature importance
+- CSV export for the current prediction result
+
+Backend responsibilities:
 
 - Load precomputed prediction payloads.
 - Run live model reinference.
@@ -298,94 +222,55 @@ GET  /api/fixed4/shap-current
 
 The frontend is implemented with React, Vite, TailwindCSS, and Plotly.js.
 
-### Main Views
+Main views:
 
 - **Overview**: RUL prediction curve, support/query split, uncertainty band, and metrics.
 - **Degradation**: capacity, DCR, impedance, temperature, current stress, and proxy degradation signals.
 - **Compare**: multi-battery comparison view.
-- **Explainability**: uncertainty summary and SHAP-based feature importance.
+- **Explainability**: uncertainty summary, cumulative anomaly evidence, SHAP-based feature importance, and model architecture.
 - **Live Reinference**: user-triggered inference flow with updated dashboard state.
 
 ---
 
 ## Tech Stack
 
-| Area | Technology |
-|---|---|
-| Deep Learning | PyTorch |
-| Meta-Learning | BMAML-SVGD-style few-shot learning |
-| Sequence Modeling | CEEMDAN + Transformer + DNN |
-| Signal Processing | CEEMDAN, robust scaling |
-| Feature Engineering | 40 time-series degradation features |
-| Hyperparameter Tuning | Ray Tune, ASHA scheduler |
-| Backend | FastAPI, DuckDB-backed local feature data access with CSV/Parquet support |
-| Frontend | React, Vite, TailwindCSS, Plotly.js |
-| Deployment | Docker, Hugging Face Spaces, Git LFS |
-| Explainability | SHAP-based feature importance |
+- **Deep Learning**: PyTorch
+- **Meta-Learning**: BMAML-SVGD-style few-shot learning
+- **Sequence Modeling**: CEEMDAN + Transformer + DNN
+- **Signal Processing**: CEEMDAN, robust scaling
+- **Feature Engineering**: 40 time-series degradation features
+- **Hyperparameter Tuning**: Ray Tune, ASHA scheduler
+- **Backend**: FastAPI, DuckDB-backed local feature data access with CSV/Parquet support
+- **Frontend**: React, Vite, TailwindCSS, Plotly.js
+- **Deployment**: Docker, Hugging Face Spaces, Git LFS
+- **Explainability**: SHAP-based feature importance
 
 ---
 
-## Project Structure
+## Repository Map
 
-```text
-battery-rul-dashboard/
-├─ deep_learning/
-│  └─ core/
-│     ├─ train_meta.py           # BMAML-style meta-training
-│     ├─ models.py               # CEEMDAN-Transformer-DNN model components
-│     ├─ meta_utils.py           # Inner loop and SVGD utilities
-│     ├─ bmaml_runtime.py        # Inference runtime entrypoint
-│     ├─ feature_shap_bmaml.py   # SHAP-based feature importance
-│     └─ config.py               # Hyperparameters and configuration
-│
-├─ backend/
-│  └─ app/
-│     ├─ main.py                 # FastAPI routes and inference APIs
-│     ├─ data_access.py          # DuckDB-backed local feature data access utilities
-│     ├─ settings.py             # Deployment-aware configuration
-│     └─ diagnostics.py          # Degradation monitoring logic
-│
-├─ frontend/
-│  └─ src/
-│     └─ ui/
-│        ├─ App.tsx              # Main dashboard UI and state flow
-│        └─ ExplainabilityAnomalyV30.tsx
-│
-├─ data/
-│  ├─ nasa_features_rul.csv      # Engineered feature data
-│  ├─ precomputed/               # Cached prediction payloads
-│  └─ precomputed_from_export_v2/
-│
-├─ scripts/
-│  └─ prefix_inference_viz_meta_restored_v3.py
-│
-├─ core_checkpoints/
-│  └─ nasa_bmaml_best_re.pt      # Final model checkpoint, tracked with Git LFS
-│
-├─ Dockerfile                    # Full-stack Docker build
-├─ hf_app.py                     # FastAPI + React serving entrypoint
-├─ run_bmaml_reinfer.py          # Live reinference wrapper
-└─ README.md
-```
+![Repository map diagram](docs/assets/repository_map_v6.svg)
+
+The diagram above highlights the main implementation entry points without listing every file in the repository tree.
 
 ---
 
 ## Local Development
 
-### 1. Create Environment
+### Create Environment
 
 ```bash
 conda create -n battery-maml python=3.10
 conda activate battery-maml
 ```
 
-### 2. Install Backend
+### Install Backend
 
 ```bash
 pip install -e ./backend
 ```
 
-### 3. Install ML Dependencies
+### Install ML Dependencies
 
 ```bash
 pip install torch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2
@@ -393,7 +278,7 @@ pip install ray[tune]==2.20.0
 pip install pyyaml
 ```
 
-### 4. Install Frontend
+### Install Frontend
 
 ```bash
 cd frontend
@@ -407,11 +292,7 @@ npm run dev
 
 ```bash
 cd deep_learning/core
-python train_meta.py --config config.yaml \
-  --k_shot 30 \
-  --q_query 128 \
-  --meta_lr 0.001 \
-  --inner_lr 0.01
+python train_meta.py --config config.yaml   --k_shot 30   --q_query 128   --meta_lr 0.001   --inner_lr 0.01
 ```
 
 ---
@@ -419,10 +300,7 @@ python train_meta.py --config config.yaml \
 ## Live Inference
 
 ```bash
-python run_bmaml_reinfer.py \
-  --battery B0043 \
-  --checkpoint ../core_checkpoints/nasa_bmaml_best_re.pt \
-  --r_ratio 0.2
+python run_bmaml_reinfer.py   --battery B0043   --checkpoint ../core_checkpoints/nasa_bmaml_best_re.pt   --r_ratio 0.2
 ```
 
 ---
@@ -431,15 +309,13 @@ python run_bmaml_reinfer.py \
 
 This project is deployed on Hugging Face Spaces using Docker.
 
-### Deployment Notes
+Deployment notes:
 
 - **Docker**: builds and serves the full-stack app.
 - **Git LFS**: tracks model checkpoint files.
 - **Dynamic Paths**: handles local vs Docker/HF runtime paths.
 - **Precomputed Cache**: improves initial dashboard loading speed.
 - **Live Reinference Timeout**: configured to allow long CPU-based inference requests.
-
-### Push to Hugging Face Spaces
 
 ```bash
 git push hf main
@@ -449,16 +325,13 @@ git push hf main
 
 ## Limitations & Future Work
 
-| Area | Current Status | Future Improvement |
-|---|---|---|
-| Dataset | NASA battery dataset only | Add CALCE or real-world EV battery data |
-| Inference | CPU-based live reinference | GPU-backed cloud inference or optimized runtime |
-| Monitoring | Basic diagnostics and degradation indicators | Structured logging and model monitoring |
-| Experiment Tracking | Limited experiment metadata | Integrate W&B / MLflow consistently |
-| CI/CD | Manual deployment flow | Add automated tests and deployment pipeline |
-| Testing | Manual validation | Add API tests, inference regression tests, and frontend flow tests |
-| Code Structure | Large backend/frontend modules | Modular FastAPI routers and reusable React components |
-| Model Optimization | Full checkpoint inference | Quantization or distilled inference model |
+- **Dataset**: currently focused on the NASA battery dataset. Future work could add CALCE or real-world EV battery data.
+- **Inference**: live reinference is CPU-based in the deployed demo. Future work could use GPU-backed cloud inference or an optimized runtime.
+- **Monitoring**: current diagnostics are dashboard-oriented. Future work could add structured logging and model monitoring.
+- **Experiment Tracking**: experiment metadata is limited. Future work could integrate W&B or MLflow consistently.
+- **Testing**: validation is mostly manual. Future work could add API tests, inference regression tests, and frontend flow tests.
+- **Code Structure**: some backend/frontend modules are large. Future work could modularize FastAPI routers and React components.
+- **Model Optimization**: current inference uses a full checkpoint. Future work could explore quantization or distilled inference models.
 
 ---
 
@@ -468,17 +341,10 @@ This project is methodologically inspired by MAML, Bayesian meta-learning, SVGD,
 
 Rather than claiming a full reproduction of each original method, the implementation uses BMAML-SVGD-style few-shot adaptation and uncertainty estimation on top of CEEMDAN-Transformer-DNN degradation modeling.
 
-- Finn et al. (2017), Model-Agnostic Meta-Learning (MAML)  
-  Used as the conceptual basis for few-shot adaptation.
-
-- Bayesian MAML / Bayesian meta-learning  
-  Used as the motivation for uncertainty-aware meta-learning and particle-based prediction.
-
-- Liu & Wang (2016), Stein Variational Gradient Descent (SVGD)  
-  Used as the basis for particle-style Bayesian uncertainty estimation.
-
-- Torres et al. (2011), CEEMDAN  
-  Used as the signal decomposition background for separating local capacity fluctuation/regeneration components from long-term degradation trends.
+- Finn et al. (2017), Model-Agnostic Meta-Learning (MAML): used as the conceptual basis for few-shot adaptation.
+- Bayesian MAML / Bayesian meta-learning: used as the motivation for uncertainty-aware meta-learning and particle-based prediction.
+- Liu & Wang (2016), Stein Variational Gradient Descent (SVGD): used as the basis for particle-style Bayesian uncertainty estimation.
+- Torres et al. (2011), CEEMDAN: used as the signal decomposition background for separating local capacity fluctuation/regeneration components from long-term degradation trends.
 
 ---
 
@@ -490,7 +356,7 @@ MIT License
 
 ## Author
 
-**onekindalphal** — Full-stack AI / Deep Learning Engineer
+**onekindalpha** — Full-stack AI / Deep Learning Engineer
 
 - Data pipeline: feature engineering, few-shot task construction, robust scaling
 - Deep learning: BMAML-SVGD-style adaptation, CEEMDAN-Transformer-DNN backbone, uncertainty estimation
@@ -503,3 +369,4 @@ MIT License
 ## Links
 
 - **Live Demo**: https://onekindalpha-battery-rul-dashboard-bmaml-svgd.hf.space
+- **Demo Video**: https://github.com/user-attachments/assets/1e05d64d-b9e3-47ac-abc4-06048ae3b7a7

@@ -62,3 +62,9 @@ frontend/src/ui/*.bak*
 frontend/src/ui/*.broken*
 frontend/src/ui/*.backup
 backend/app/*.bak*
+
+README.backup.md
+README.backup.*.md
+README 2.md
+README 3.md
+README_NEW.md

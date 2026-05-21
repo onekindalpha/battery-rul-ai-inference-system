@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#334155"/></marker></defs>
+<rect width="1400" height="760" fill="#ffffff"/>
+<text x="44" y="58" font-family="Arial, sans-serif" font-size="32" font-weight="700" fill="#0f172a">Backend API Flow</text>
+<text x="44" y="90" font-family="Arial, sans-serif" font-size="17" fill="#475569">FastAPI routes connecting inference, monitoring, explainability, and export</text>
+<rect x="50" y="150" width="300" height="300" rx="20" fill="#DBEAFE" stroke="#60A5FA" stroke-width="2"/>
+<text x="74" y="194" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#0f172a">Request</text>
+<text x="78" y="236" font-family="Arial, sans-serif" font-size="16" fill="#334155">• Battery ID</text>
+<text x="78" y="266" font-family="Arial, sans-serif" font-size="16" fill="#334155">• Observation ratio</text>
+<text x="78" y="296" font-family="Arial, sans-serif" font-size="16" fill="#334155">• Selected cycle</text>
+<line x1="356" y1="300" x2="382" y2="300" stroke="#334155" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="390" y="150" width="300" height="300" rx="20" fill="#DCFCE7" stroke="#4ADE80" stroke-width="2"/>
+<text x="414" y="194" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#0f172a">FastAPI</text>
+<text x="418" y="236" font-family="Arial, sans-serif" font-size="16" fill="#334155">• Precomputed loading</text>
+<text x="418" y="266" font-family="Arial, sans-serif" font-size="16" fill="#334155">• Live reinference</text>
+<text x="418" y="296" font-family="Arial, sans-serif" font-size="16" fill="#334155">• Degradation monitoring</text>
+<text x="418" y="326" font-family="Arial, sans-serif" font-size="16" fill="#334155">• SHAP importance</text>
+<line x1="696" y1="300" x2="722" y2="300" stroke="#334155" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="730" y="150" width="300" height="300" rx="20" fill="#FFEDD5" stroke="#FB923C" stroke-width="2"/>
+<text x="754" y="194" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#0f172a">Data Access</text>
+<text x="758" y="236" font-family="Arial, sans-serif" font-size="16" fill="#334155">• DuckDB</text>
+<text x="758" y="266" font-family="Arial, sans-serif" font-size="16" fill="#334155">• CSV / Parquet</text>
+<text x="758" y="296" font-family="Arial, sans-serif" font-size="16" fill="#334155">• JSON payloads</text>
+<line x1="1036" y1="300" x2="1062" y2="300" stroke="#334155" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="1070" y="150" width="300" height="300" rx="20" fill="#F3E8FF" stroke="#A78BFA" stroke-width="2"/>
+<text x="1094" y="194" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#0f172a">Response</text>
+<text x="1098" y="236" font-family="Arial, sans-serif" font-size="16" fill="#334155">• Prediction arrays</text>
+<text x="1098" y="266" font-family="Arial, sans-serif" font-size="16" fill="#334155">• Uncertainty values</text>
+<text x="1098" y="296" font-family="Arial, sans-serif" font-size="16" fill="#334155">• Metrics</text>
+<text x="1098" y="326" font-family="Arial, sans-serif" font-size="16" fill="#334155">• CSV export</text>
+<rect x="44" y="520" width="1312" height="150" rx="18" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.5"/>
+<text x="74" y="560" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#0f172a">README note</text>
+<text x="74" y="595" font-family="Arial, sans-serif" font-size="17" fill="#334155">This diagram replaces long gray architecture/code blocks while keeping the implementation flow visible.</text>
+<text x="74" y="625" font-family="Arial, sans-serif" font-size="17" fill="#334155">It is intended for portfolio readability, not as a full production architecture specification.</text>
+</svg>
