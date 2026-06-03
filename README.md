@@ -13,6 +13,7 @@ Deep learning-based full-stack AI inference system for battery remaining useful 
 [![Battery RUL AI Inference Dashboard Demo](docs/assets/demo_thumbnail.png)](https://github.com/user-attachments/assets/1e05d64d-b9e3-47ac-abc4-06048ae3b7a7)
 
 The demo shows cycle-level RUL inference, degradation monitoring, battery comparison, explainability with pre-EOL anomaly evidence, SHAP-based feature importance, and live reinference.
+Related project: [Battery Technical Document RAG](https://github.com/onekindalpha/battery-technical-document-rag)
 
 ---
 
