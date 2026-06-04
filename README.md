@@ -182,12 +182,12 @@ The inference manager first checks whether a precomputed result is available. If
 
 This project was not designed as a direct reproduction of a single paper. The papers were used as design references for feature selection, decomposition-based modeling, early-cycle prediction, and uncertainty-aware adaptation.
 
-| Reference direction | How it informed this project |
+| Paper / study | How it informed this project |
 | --- | --- |
-| EV real-driving battery aging studies | Treated capacity, temperature, impedance, resistance, and usage pattern as operational degradation signals rather than relying only on capacity. |
-| Formation protocol / lifetime prediction studies | Reinforced the importance of early diagnostic signals and resistance-related features for long-term lifetime prediction. |
-| CEEMDAN-Transformer-DNN RUL model | Used as the backbone idea for decomposing capacity degradation into IMF components and residual trend before sequence modeling. |
-| Few-shot Bayesian meta-learning RUL study | Used as a reference for adapting to a new degradation task with limited early-cycle observations and representing predictive uncertainty. |
+| *Lithium-ion battery aging dataset based on electric vehicle real-driving profiles* | Treated capacity, temperature, impedance, resistance, and usage pattern as operational degradation signals rather than relying only on capacity. |
+| *Predicting the impact of formation protocols on battery lifetime immediately after manufacturing* | Reinforced the importance of early diagnostic signals and resistance-related features for long-term lifetime prediction. |
+| *Early prediction of remaining useful life for lithium-ion batteries based on CEEMDAN-transformer-DNN hybrid model* | Used as the backbone idea for decomposing capacity degradation into IMF components and residual trend before sequence modeling. |
+| *Few-shot remaining useful life prediction based on Bayesian meta-learning with predictive uncertainty calibration* | Used as a reference for adapting to a new degradation task with limited early-cycle observations and representing predictive uncertainty. |
 
 The final implementation combines these ideas with a FastAPI/React inference application so the model output can be inspected as an operational dashboard.
 
