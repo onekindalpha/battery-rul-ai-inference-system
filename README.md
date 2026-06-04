@@ -184,10 +184,10 @@ This project was not designed as a direct reproduction of a single paper. The pa
 
 | Paper / study | How it informed this project |
 | --- | --- |
-| *Lithium-ion battery aging dataset based on electric vehicle real-driving profiles* | Treated capacity, temperature, impedance, resistance, and usage pattern as operational degradation signals rather than relying only on capacity. |
-| *Predicting the impact of formation protocols on battery lifetime immediately after manufacturing* | Reinforced the importance of early diagnostic signals and resistance-related features for long-term lifetime prediction. |
-| *Early prediction of remaining useful life for lithium-ion batteries based on CEEMDAN-transformer-DNN hybrid model* | Used as the backbone idea for decomposing capacity degradation into IMF components and residual trend before sequence modeling. |
-| *Few-shot remaining useful life prediction based on Bayesian meta-learning with predictive uncertainty calibration* | Used as a reference for adapting to a new degradation task with limited early-cycle observations and representing predictive uncertainty. |
+| Pozzato, Allam, & Onori (2022), *Lithium-ion battery aging dataset based on electric vehicle real-driving profiles* | Treated capacity, temperature, impedance, resistance, and usage pattern as operational degradation signals rather than relying only on capacity. |
+| Weng, Mohtat, Attia, Sulzer, Lee, Less, & Stefanopoulou (2021), *Predicting the impact of formation protocols on battery lifetime immediately after manufacturing* | Reinforced the importance of early diagnostic signals and resistance-related features for long-term lifetime prediction. |
+| Cai, Li, Zahid, Zheng, Zhang, & Xu (2023), *Early prediction of remaining useful life for lithium-ion batteries based on CEEMDAN-transformer-DNN hybrid model* | Used as the backbone idea for decomposing capacity degradation into IMF components and residual trend before sequence modeling. |
+| Chang & Lin (2025), *Few-shot remaining useful life prediction based on Bayesian meta-learning with predictive uncertainty calibration* | Used as a reference for adapting to a new degradation task with limited early-cycle observations and representing predictive uncertainty. |
 
 The final implementation combines these ideas with a FastAPI/React inference application so the model output can be inspected as an operational dashboard.
 

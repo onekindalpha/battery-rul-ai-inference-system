@@ -184,10 +184,10 @@ Inference manager는 먼저 precomputed result가 있는지 확인합니다. 사
 
 | Paper / study | How it informed this project |
 | --- | --- |
-| *Lithium-ion battery aging dataset based on electric vehicle real-driving profiles* | capacity, temperature, impedance, resistance, usage pattern을 operational degradation signal로 해석하는 데 참고했습니다. |
-| *Predicting the impact of formation protocols on battery lifetime immediately after manufacturing* | early diagnostic signal과 resistance-related feature가 long-term lifetime prediction에 중요하다는 점을 참고했습니다. |
-| *Early prediction of remaining useful life for lithium-ion batteries based on CEEMDAN-transformer-DNN hybrid model* | capacity degradation을 IMF component와 residual trend로 분해한 뒤 sequence modeling에 연결하는 backbone 아이디어로 활용했습니다. |
-| *Few-shot remaining useful life prediction based on Bayesian meta-learning with predictive uncertainty calibration* | 제한된 early-cycle observation으로 새로운 degradation task에 적응하고 predictive uncertainty를 표현하는 방향을 참고했습니다. |
+| Pozzato, Allam, & Onori (2022), *Lithium-ion battery aging dataset based on electric vehicle real-driving profiles* | capacity, temperature, impedance, resistance, usage pattern을 operational degradation signal로 해석하는 데 참고했습니다. |
+| Weng, Mohtat, Attia, Sulzer, Lee, Less, & Stefanopoulou (2021), *Predicting the impact of formation protocols on battery lifetime immediately after manufacturing* | early diagnostic signal과 resistance-related feature가 long-term lifetime prediction에 중요하다는 점을 참고했습니다. |
+| Cai, Li, Zahid, Zheng, Zhang, & Xu (2023), *Early prediction of remaining useful life for lithium-ion batteries based on CEEMDAN-transformer-DNN hybrid model* | capacity degradation을 IMF component와 residual trend로 분해한 뒤 sequence modeling에 연결하는 backbone 아이디어로 활용했습니다. |
+| Chang & Lin (2025), *Few-shot remaining useful life prediction based on Bayesian meta-learning with predictive uncertainty calibration* | 제한된 early-cycle observation으로 새로운 degradation task에 적응하고 predictive uncertainty를 표현하는 방향을 참고했습니다. |
 
 최종 구현은 위 방법론들을 FastAPI/React inference application과 연결해, 모델 결과를 운영 대시보드 형태로 점검할 수 있게 만든 것입니다.
 
