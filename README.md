@@ -1,11 +1,10 @@
 # Battery RUL AI Inference System
 
-Language: English | [한국어](README.ko.md)
+**Language:** English | [한국어](./README.ko.md)
 
 Deep learning-based AI inference application for lithium-ion battery remaining useful life (RUL) prediction, uncertainty visualization, degradation monitoring, and live reinference.
 
-This project started from a modeling question: **can a battery RUL model make useful long-range predictions from only early-cycle observations, even when batteries show different degradation patterns?**  
-The final system connects CEEMDAN-based signal decomposition, Transformer/DNN representation learning, BMAML-SVGD-style few-shot adaptation, FastAPI inference APIs, and a React dashboard.
+This project started from a modeling question: **can a battery RUL model make useful long-range predictions from only early-cycle observations, even when batteries show different degradation patterns?** The final system connects CEEMDAN-based signal decomposition, Transformer/DNN representation learning, BMAML-SVGD-style few-shot adaptation, FastAPI inference APIs, and a React dashboard.
 
 **Live Demo**: https://onekindalpha-battery-rul-dashboard-bmaml-svgd.hf.space  
 **Demo Video**: https://github.com/user-attachments/assets/1e05d64d-b9e3-47ac-abc4-06048ae3b7a7  
@@ -40,24 +39,18 @@ The dashboard is designed to show more than a final prediction score:
 flowchart TB
     A["NASA Battery Cycle Data<br/>B0005-B0056 explored"] --> B["Cycle-level preprocessing<br/>capacity, voltage, current, temperature, impedance"]
     B --> C["Battery-level grouping<br/>sequence windows + summary features"]
-
     C --> D1["Sequential features<br/>sensor features + CEEMDAN IMF features"]
     C --> D2["Summary / physics features<br/>SoH, statistics, degradation indicators"]
-
     D1 --> E1["Optional ResNet1D stem"]
     E1 --> E2["Transformer Encoder"]
     D2 --> E3["DNN / metadata branch"]
-
     E2 --> F["Cross-Attention Fusion"]
     E3 --> F
-
     F --> G["RUL prediction head"]
     F --> H["Auxiliary reconstruction head"]
-
     G --> I["BMAML-SVGD-style<br/>few-shot adaptation"]
     I --> J["Mean RUL prediction"]
     I --> K["Prediction uncertainty"]
-
     J --> L["FastAPI inference API"]
     K --> L
     L --> M["React dashboard<br/>RUL, SoH, trend, uncertainty, live reinference"]
@@ -99,14 +92,11 @@ flowchart TB
     A["New battery task"] --> B["Early-cycle observation"]
     B --> C["Support set<br/>few-shot adaptation"]
     B --> D["Query set<br/>future prediction target"]
-
     E["Meta-learned initial particles"] --> F["SVGD inner-loop update"]
     C --> F
-
     F --> G["Adapted particles"]
     G --> H["Query prediction"]
     D --> H
-
     H --> I["Mean RUL prediction"]
     H --> J["Prediction uncertainty"]
 ```
@@ -117,7 +107,9 @@ The BMAML-SVGD-style stage keeps multiple parameter particles, adapts them on th
 
 ## Final Checkpoint Split
 
-The project initially explored a wider NASA battery range and several degradation groups. The final BMAML checkpoint uses the following battery-level split:
+The project initially explored a wider NASA battery range and several degradation groups.
+
+The final BMAML checkpoint uses the following battery-level split:
 
 | Split | Batteries |
 | --- | --- |
@@ -137,15 +129,7 @@ Key setting snapshot:
 | RUL scaling | minmax |
 | Representative metric | RMSE 7.46 cycles, MAE 6.82 cycles |
 
-The split is battery-based, so the test batteries are evaluated as separate battery tasks rather than row-level random samples. In the dashboard, B0018 is useful as a representative normal-degradation test battery, while B0043 is useful for inspecting a steeper degradation pattern.
-
----
-
-## Training Optimization
-
-Early experiments showed that longer training did not always improve the model. Some runs stayed near an RMSE plateau even after many epochs. To search model settings faster, Ray Tune was used to run multiple trials across available CPU/GPU resources, and ASHA was used to stop weak trials early.
-
-This tuning process reduced manual trial-and-error before the final BMAML-SVGD-style checkpoint.
+The split is battery-based, so the test batteries are evaluated as separate battery tasks rather than row-level random samples.
 
 ---
 
@@ -214,50 +198,17 @@ The diagram above highlights the main implementation entry points without listin
 
 ---
 
-## Local Development
+## Development Notes
 
-```bash
-# Backend
-cd backend
-uvicorn main:app --reload
-```
-
-```bash
-# Frontend
-cd frontend
-npm install
-npm run dev
-```
-
-```bash
-# Live reinference example
-python run_bmaml_reinfer.py --battery B0043 --checkpoint ../core_checkpoints/nasa_bmaml_best_re.pt --r_ratio 0.2
-```
-
-Paths may vary depending on local checkpoint and data locations. The public demo uses prepared assets and precomputed prediction files for stable dashboard loading.
-
----
-
-## Deployment
-
-This project is deployed on Hugging Face Spaces using Docker.
-
-Deployment notes:
-
-- Docker builds and serves the full-stack app.
-- Git LFS tracks model checkpoint files.
-- Precomputed cache improves initial dashboard loading speed.
-- Live reinference is available as an on-demand path in the demo environment.
-
-```bash
-git push hf main
-```
+Local development, deployment commands, and runtime notes are separated into [DEVELOPMENT.md](./DEVELOPMENT.md).
 
 ---
 
 ## Limitations & Future Work
 
-This is a portfolio-level AI inference application, not a production BMS system. The current implementation is based on NASA battery data and selected battery-level evaluation scenarios.
+This is a portfolio-level AI inference application, not a production BMS system.
+
+The current implementation is based on NASA battery data and selected battery-level evaluation scenarios.
 
 Future work:
 

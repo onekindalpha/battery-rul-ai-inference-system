@@ -1,11 +1,10 @@
 # Battery RUL AI Inference System
 
-Language: [English](README.md) | 한국어
+**언어:** [English](./README.md) | 한국어
 
 리튬이온 배터리 잔여수명(RUL, Remaining Useful Life) 예측, 불확실성 시각화, 열화 모니터링, live reinference를 제공하는 딥러닝 기반 AI inference application입니다.
 
-이 프로젝트는 하나의 모델링 질문에서 출발했습니다. **배터리별 열화 패턴과 실험 조건이 다르더라도, 초기 일부 cycle 관측값만으로 이후의 긴 RUL 궤적을 예측할 수 있을까?**  
-최종 시스템은 CEEMDAN 기반 신호 분해, Transformer/DNN 표현 학습, BMAML-SVGD-style few-shot adaptation, FastAPI inference API, React 대시보드를 연결합니다.
+이 프로젝트는 하나의 모델링 질문에서 출발했습니다. **배터리별 열화 패턴과 실험 조건이 다르더라도, 초기 일부 cycle 관측값만으로 이후의 긴 RUL 궤적을 예측할 수 있을까?** 최종 시스템은 CEEMDAN 기반 신호 분해, Transformer/DNN 표현 학습, BMAML-SVGD-style few-shot adaptation, FastAPI inference API, React 대시보드를 연결합니다.
 
 **Live Demo**: https://onekindalpha-battery-rul-dashboard-bmaml-svgd.hf.space  
 **Demo Video**: https://github.com/user-attachments/assets/1e05d64d-b9e3-47ac-abc4-06048ae3b7a7  
@@ -40,24 +39,18 @@ Language: [English](README.md) | 한국어
 flowchart TB
     A["NASA Battery Cycle Data<br/>B0005-B0056 explored"] --> B["Cycle-level preprocessing<br/>capacity, voltage, current, temperature, impedance"]
     B --> C["Battery-level grouping<br/>sequence windows + summary features"]
-
     C --> D1["Sequential features<br/>sensor features + CEEMDAN IMF features"]
     C --> D2["Summary / physics features<br/>SoH, statistics, degradation indicators"]
-
     D1 --> E1["Optional ResNet1D stem"]
     E1 --> E2["Transformer Encoder"]
     D2 --> E3["DNN / metadata branch"]
-
     E2 --> F["Cross-Attention Fusion"]
     E3 --> F
-
     F --> G["RUL prediction head"]
     F --> H["Auxiliary reconstruction head"]
-
     G --> I["BMAML-SVGD-style<br/>few-shot adaptation"]
     I --> J["Mean RUL prediction"]
     I --> K["Prediction uncertainty"]
-
     J --> L["FastAPI inference API"]
     K --> L
     L --> M["React dashboard<br/>RUL, SoH, trend, uncertainty, live reinference"]
@@ -67,7 +60,7 @@ flowchart TB
 
 ## Why CEEMDAN + Transformer/DNN
 
-배터리 capacity degradation은 하나의 매끄러운 선이 아닙니다. 국소적인 변동, capacity regeneration-like behavior, 장기 열화 추세가 함께 섞여 있습니다. 이 프로젝트는 sequence modeling 이전에 CEEMDAN decomposition으로 신호를 분리합니다.
+Battery capacity degradation은 하나의 매끄러운 선이 아닙니다. 국소적인 변동, capacity regeneration-like behavior, 장기 열화 추세가 함께 섞여 있습니다. 이 프로젝트는 sequence modeling 이전에 CEEMDAN decomposition으로 신호를 분리합니다.
 
 ```mermaid
 flowchart TB
@@ -99,14 +92,11 @@ flowchart TB
     A["New battery task"] --> B["Early-cycle observation"]
     B --> C["Support set<br/>few-shot adaptation"]
     B --> D["Query set<br/>future prediction target"]
-
     E["Meta-learned initial particles"] --> F["SVGD inner-loop update"]
     C --> F
-
     F --> G["Adapted particles"]
     G --> H["Query prediction"]
     D --> H
-
     H --> I["Mean RUL prediction"]
     H --> J["Prediction uncertainty"]
 ```
@@ -137,15 +127,7 @@ Key setting snapshot:
 | RUL scaling | minmax |
 | Representative metric | RMSE 7.46 cycles, MAE 6.82 cycles |
 
-해당 split은 row-level random split이 아니라 battery-based split입니다. Dashboard에서 B0018은 정상 열화 test battery 사례로, B0043은 더 급격한 열화 패턴을 확인하는 test battery 사례로 활용할 수 있습니다.
-
----
-
-## Training Optimization
-
-초기 실험에서는 epoch을 늘린다고 항상 성능이 개선되지 않았고, 일부 run은 RMSE plateau에 머무르는 문제가 있었습니다. 여러 설정을 빠르게 탐색하기 위해 Ray Tune으로 CPU/GPU resource를 나누어 trial을 실행했고, ASHA scheduler로 성능이 낮은 trial을 조기에 중단했습니다.
-
-이 과정을 통해 final BMAML-SVGD-style checkpoint 이전의 수동 trial-and-error를 줄였습니다.
+해당 split은 row-level random split이 아니라 battery-based split입니다.
 
 ---
 
@@ -178,21 +160,6 @@ Inference manager는 먼저 precomputed result가 있는지 확인합니다. 사
 
 ---
 
-## Methodological Background
-
-이 프로젝트는 하나의 논문을 그대로 재현하기보다, feature selection, decomposition-based modeling, early-cycle prediction, uncertainty-aware adaptation의 설계 방향을 정하기 위해 아래 연구들을 참고했습니다.
-
-| Paper / study | How it informed this project |
-| --- | --- |
-| Pozzato, Allam, & Onori (2022), *Lithium-ion battery aging dataset based on electric vehicle real-driving profiles* | capacity, temperature, impedance, resistance, usage pattern을 operational degradation signal로 해석하는 데 참고했습니다. |
-| Weng, Mohtat, Attia, Sulzer, Lee, Less, & Stefanopoulou (2021), *Predicting the impact of formation protocols on battery lifetime immediately after manufacturing* | early diagnostic signal과 resistance-related feature가 long-term lifetime prediction에 중요하다는 점을 참고했습니다. |
-| Cai, Li, Zahid, Zheng, Zhang, & Xu (2023), *Early prediction of remaining useful life for lithium-ion batteries based on CEEMDAN-transformer-DNN hybrid model* | capacity degradation을 IMF component와 residual trend로 분해한 뒤 sequence modeling에 연결하는 backbone 아이디어로 활용했습니다. |
-| Chang & Lin (2025), *Few-shot remaining useful life prediction based on Bayesian meta-learning with predictive uncertainty calibration* | 제한된 early-cycle observation으로 새로운 degradation task에 적응하고 predictive uncertainty를 표현하는 방향을 참고했습니다. |
-
-최종 구현은 위 방법론들을 FastAPI/React inference application과 연결해, 모델 결과를 운영 대시보드 형태로 점검할 수 있게 만든 것입니다.
-
----
-
 ## Tech Stack
 
 | Area | Stack |
@@ -214,50 +181,17 @@ Inference manager는 먼저 precomputed result가 있는지 확인합니다. 사
 
 ---
 
-## Local Development
+## Development Notes
 
-```bash
-# Backend
-cd backend
-uvicorn main:app --reload
-```
-
-```bash
-# Frontend
-cd frontend
-npm install
-npm run dev
-```
-
-```bash
-# Live reinference example
-python run_bmaml_reinfer.py --battery B0043 --checkpoint ../core_checkpoints/nasa_bmaml_best_re.pt --r_ratio 0.2
-```
-
-Local checkpoint와 data 위치에 따라 path는 달라질 수 있습니다. Public demo는 안정적인 dashboard loading을 위해 prepared assets와 precomputed prediction file을 사용합니다.
-
----
-
-## Deployment
-
-이 프로젝트는 Docker 기반 Hugging Face Spaces에 배포했습니다.
-
-Deployment notes:
-
-- Docker가 full-stack app을 build하고 serving합니다.
-- Git LFS로 model checkpoint file을 관리합니다.
-- Precomputed cache로 initial dashboard loading speed를 개선합니다.
-- Live reinference는 on-demand path로 실행할 수 있습니다.
-
-```bash
-git push hf main
-```
+로컬 개발, 배포 명령어, runtime note는 [DEVELOPMENT.md](./DEVELOPMENT.md)에 분리했습니다.
 
 ---
 
 ## Limitations & Future Work
 
-이 프로젝트는 production BMS system이 아니라 portfolio-level AI inference application입니다. 현재 구현은 NASA battery data와 selected battery-level evaluation scenario를 기반으로 합니다.
+이 프로젝트는 production BMS system이 아니라 portfolio-level AI inference application입니다.
+
+현재 구현은 NASA battery data와 selected battery-level evaluation scenario를 기반으로 합니다.
 
 Future work:
 
@@ -266,12 +200,6 @@ Future work:
 - RAG research copilot과 experiment log / model card 연결
 - prediction drift와 data quality check를 위한 model monitoring view 추가
 - production-like deployment를 위한 live inference runtime 최적화
-
----
-
-## License
-
-MIT License
 
 ---
 
@@ -284,11 +212,3 @@ MIT License
 - Backend: FastAPI, DuckDB-backed feature access, inference APIs, degradation monitoring
 - Frontend: React dashboard, visualization, live reinference state management
 - Deployment: Docker, Hugging Face Spaces, Git LFS
-
----
-
-## Links
-
-- **Live Demo**: https://onekindalpha-battery-rul-dashboard-bmaml-svgd.hf.space
-- **Demo Video**: https://github.com/user-attachments/assets/1e05d64d-b9e3-47ac-abc4-06048ae3b7a7
-- **Related RAG Copilot**: https://github.com/onekindalpha/battery-technical-document-rag
